@@ -11,14 +11,14 @@ public class ProductDAO {
 
     // Add product
     public void addProduct(Product p) throws Exception {
-        String sql = "INSERT INTO products (id,name, price, category, quantity) VALUES (?,?, ?, ?, ?)";
+        String sql = "INSERT INTO products (id,name, category, quantity,price) VALUES (?,?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, p.getId());
             stmt.setString(2, p.getName());
-            stmt.setDouble(3, p.getPrice());
-            stmt.setString(4, p.getCategory());
-            stmt.setInt(5, p.getQuantity());
+            stmt.setString(3, p.getCategory());
+            stmt.setInt(4, p.getQuantity());
+            stmt.setDouble(5, p.getPrice());
             stmt.executeUpdate();
         }
     }
@@ -26,7 +26,7 @@ public class ProductDAO {
     // Get all products
     public List<Product> getAllProducts() throws Exception {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT * FROM inventory";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
