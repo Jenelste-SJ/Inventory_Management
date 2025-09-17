@@ -1,8 +1,9 @@
 package org.example;
 
-import org.example.Model.Product;
-import org.example.Service.Inventory;
+import org.example.model.Product;
+import org.example.service.Inventory;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -22,16 +23,25 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter Product ID");
-                    int id = sc.nextInt();
-                    System.out.print("Enter name: ");
-                    String name = sc.next();
-                    System.out.print("Enter price: ");
-                    double price = sc.nextDouble();
-                    System.out.print("Enter category: ");
-                    String category = sc.next();
-                    System.out.print("Enter quantity: ");
-                    int qty = sc.nextInt();
+                    int id = 0;
+                    String name = null;
+                    double price = 0;
+                    String category = null;
+                    int qty = 0;
+                    try {
+                        System.out.println("Enter Product ID");
+                        id = sc.nextInt();
+                        System.out.print("Enter name: ");
+                        name = sc.next();
+                        System.out.print("Enter price: ");
+                        price = sc.nextDouble();
+                        System.out.print("Enter category: ");
+                        category = sc.next();
+                        System.out.print("Enter quantity: ");
+                        qty = sc.nextInt();
+                    } catch (Exception e) {
+                        throw new InputMismatchException("Invalid input");
+                    }
 
                     Product p = new Product(id, name, price, category, qty);
                     service.addProduct(p);

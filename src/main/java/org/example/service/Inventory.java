@@ -1,7 +1,9 @@
-package org.example.Service;
+package org.example.service;
 
 import org.example.dao.ProductDAO;
-import org.example.Model.Product;
+import org.example.exception.DatabaseException;
+import org.example.exception.ProductNotFoundException;
+import org.example.model.Product;
 import java.util.List;
 
 public class Inventory {
@@ -11,10 +13,11 @@ public class Inventory {
         try {
             dao.addProduct(p);
             System.out.println("✅ Product added successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DatabaseException e) {
+            System.err.println("❌ Failed to add product. Reason: " + e.getMessage());
         }
-    }
+        }
+
 
     public void viewAllProducts() {
         try {
@@ -25,8 +28,8 @@ public class Inventory {
                 System.out.println("---- Product List ----");
                 products.forEach(System.out::println);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DatabaseException e) {
+            System.err.println("❌ Failed to fetch products. Reason: " + e.getMessage());
         }
     }
 
@@ -38,8 +41,10 @@ public class Inventory {
             } else {
                 System.out.println("⚠ Product not found!");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ProductNotFoundException e) {
+            System.err.println("⚠ " + e.getMessage());
+        } catch (DatabaseException e) {
+            System.err.println("❌ Error searching product. Reason: " + e.getMessage());
         }
     }
 
@@ -51,8 +56,10 @@ public class Inventory {
             } else {
                 System.out.println("No product found with that ID!");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ProductNotFoundException e) {
+            System.err.println("⚠ " + e.getMessage());
+        } catch (DatabaseException e) {
+            System.err.println("❌ Failed to remove product. Reason: " + e.getMessage());
         }
     }
 }
