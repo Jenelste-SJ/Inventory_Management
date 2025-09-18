@@ -1,16 +1,18 @@
 package org.example;
 
+import org.example.exception.InputException;
 import org.example.model.Product;
 import org.example.service.Inventory;
 
-import java.util.InputMismatchException;
+import java.sql.SQLException;
+
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Inventory service = new Inventory();
         Scanner sc = new Scanner(System.in);
-
+        service.exportInventoryToCSV("inventory.csv");
         while (true) {
             System.out.println("\n--- Inventory Menu ---");
             System.out.println("1. Add Product");
@@ -29,7 +31,7 @@ public class Main {
                     String category = null;
                     int qty = 0;
                     try {
-                        System.out.println("Enter Product ID");
+                        System.out.print("Enter Product ID");
                         id = sc.nextInt();
                         System.out.print("Enter name: ");
                         name = sc.next();
@@ -40,7 +42,7 @@ public class Main {
                         System.out.print("Enter quantity: ");
                         qty = sc.nextInt();
                     } catch (Exception e) {
-                        throw new InputMismatchException("Invalid input");
+                        throw new InputException("Invalid input");
                     }
 
                     Product p = new Product(id, name, price, category, qty);
@@ -69,7 +71,14 @@ public class Main {
 
                 default:
                     System.out.println("Invalid choice!");
+
+
+
             }
+
+
         }
+
+
     }
 }

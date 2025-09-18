@@ -62,4 +62,12 @@ public class Inventory {
             System.err.println("❌ Failed to remove product. Reason: " + e.getMessage());
         }
     }
+
+    public void exportInventoryToCSV(String filePath) {
+        try {
+            dao.exportProductsToCSV(filePath);
+        } catch (Exception e) {
+            System.out.println("⚠️ Could not export products: " + e.getMessage());
+        }
+    }
 }
