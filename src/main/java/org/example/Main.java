@@ -1,8 +1,10 @@
 package org.example;
 
+import org.example.dao.ProductDAO;
 import org.example.exception.InputException;
 import org.example.model.Product;
 import org.example.service.Inventory;
+import org.example.util.CSVHelp;
 
 import java.sql.SQLException;
 
@@ -12,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         Inventory service = new Inventory();
         Scanner sc = new Scanner(System.in);
-        service.exportInventoryToCSV("inventory.csv");
+        Inventory inventory = new Inventory();
         while (true) {
             System.out.println("\n--- Inventory Menu ---");
             System.out.println("1. Add Product");
@@ -47,6 +49,7 @@ public class Main {
 
                     Product p = new Product(id, name, price, category, qty);
                     service.addProduct(p);
+                    inventory.exportInventoryToCSV("inventory.csv");
                     break;
 
                 case 2:

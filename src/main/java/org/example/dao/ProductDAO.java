@@ -3,10 +3,6 @@ package org.example.dao;
 import org.example.model.Product;
 import org.example.util.DBConnection;
 import org.example.exception.*;
-
-
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,25 +91,4 @@ public class ProductDAO {
     }
 
 
-    public void exportProductsToCSV(String filePath) throws Exception {
-        List<Product> products = getAllProducts();
-
-        // Wrap PrintWriter around FileWriter
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
-            // Header row
-            writer.println("id,name,category,quantity,price");
-
-            // Data rows
-            for (Product p : products) {
-                writer.println(
-                        p.getId() + "," +
-                                p.getName() + ","  +
-                                p.getCategory() + "," +
-                                p.getQuantity()+"," +
-                                p.getPrice()
-                );
-            }
-            System.out.println("✅ Products exported to " + filePath);
-        }
-    }
 }

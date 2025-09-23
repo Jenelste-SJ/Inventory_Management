@@ -4,6 +4,8 @@ import org.example.dao.ProductDAO;
 import org.example.exception.DatabaseException;
 import org.example.exception.ProductNotFoundException;
 import org.example.model.Product;
+import org.example.util.CSVHelp;
+
 import java.util.List;
 
 public class Inventory {
@@ -62,12 +64,14 @@ public class Inventory {
             System.err.println("❌ Failed to remove product. Reason: " + e.getMessage());
         }
     }
-
-    public void exportInventoryToCSV(String filePath) {
+    public static void exportInventoryToCSV(String filePath) {
+        CSVHelp csv = new CSVHelp();
         try {
-            dao.exportProductsToCSV(filePath);
+            csv.exportProductsToCSV(filePath);
         } catch (Exception e) {
             System.out.println("⚠️ Could not export products: " + e.getMessage());
         }
     }
+
+
 }
